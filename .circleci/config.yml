@@ -43,6 +43,11 @@ jobs:
           command: |
             $(aws ecr get-login --no-include-email --region ap-northeast-1)
             docker build -t ${ECR_DOMAIN}/sample-image:$CIRCLE_SHA1 -t ${ECR_DOMAIN}/sample-image:latest .
+      - run:
+          name: Push Docker Image
+          command: |
+            docker push ${ECR_DOMAIN}/sample-image:$CIRCLE_SHA1
+            docker push ${ECR_DOMAIN}/sample-image:latest
 
 workflows:
   version: 2
