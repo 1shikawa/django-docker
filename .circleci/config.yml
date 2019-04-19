@@ -16,10 +16,10 @@ jobs:
           command: sleep 1
       - run:
           name: "before_test: setup db"
-          command: docker-compose run web /bin/bash
-#      - run:
-#          name: test
-#          command: docker-compose run web bundle exec rspec
+          command: docker-compose run web python manage.py makemigrations
+      #      - run:
+      #          name: test
+      #          command: docker-compose run web bundle exec rspec
       - run:
           name: docker-compose down
           command: docker-compose down
@@ -30,9 +30,3 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-#      - deploy:
-#          requires:
-#            - build
-          filters:
-            branches:
-              only: master
