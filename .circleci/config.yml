@@ -15,11 +15,14 @@ jobs:
           name: sleep for waiting launch db
           command: sleep 1
       - run:
-          name: "before_test: setup db"
+          name: "before_test: makemigrations"
           command: docker-compose run web python manage.py makemigrations
-      #      - run:
-      #          name: test
-      #          command: docker-compose run web bundle exec rspec
+      - run:
+          name: "before_test: migrate"
+          command: docker-compose run web python manage.py makemigrations
+      - run:
+          name: test
+          command: docker-compose run web python manage.py test tests
       - run:
           name: docker-compose down
           command: docker-compose down
